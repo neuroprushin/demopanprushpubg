@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Mesh Анализ</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        .container { max-width: 900px; margin: auto; }
+        .upload-form { margin-bottom: 20px; padding: 15px; border: 1px solid #ccc; border-radius: 5px; }
+        .images { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 20px; }
+        .image-box { border: 1px solid #eee; padding: 10px; border-radius: 5px; text-align: center; }
+        .image-box img { max-width: 400px; height: auto; display: block; margin-top: 10px; }
+        .status { margin-top: 15px; font-weight: bold; padding: 10px; background-color: #f0f0f0; border-radius: 5px; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Анализ лица с помощью Face Mesh</h1>
+
+        <div class="upload-form">
+            <form method="post" enctype="multipart/form-data" action="/upload">
+                <label for="file">Выберите изображение:</label><br>
+                <input type="file" id="file" name="file" accept="image/*" required><br><br>
+                <button type="submit">Загрузить и обработать</button>
+            </form>
+        </div>
+
+        {% if error_message %}
+            <p class="status error">{{ error_message }}</p>
+        {% endif %}
+
+        {% if status_message %}
+            <p class="status">{{ status_message }}</p>
+        {% endif %}
+
+        {% if original_image_data or processed_image_data %}
+            <div class="images">
+                {% if original_image_data %}
+                <div class="image-box">
+                    <h3>Оригинал:</h3>
+                    <img src="data:image/jpeg;base64,{{ original_image_data }}" alt="Original Image">
+                </div>
+                {% endif %}
+
+                {% if processed_image_data %}
+                <div class="image-box">
+                    <h3>Результат:</h3>
+                    <img src="data:image/jpeg;base64,{{ processed_image_data }}" alt="Processed Image">
+                </div>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
