@@ -5,16 +5,28 @@ import numpy as np
 import base64
 import io
 from flask import Flask, render_template, request
+from mediapipe.tasks import python
+from mediapipe.tasks.python import vision
 
 # --- Инициализация Flask ---
 app = Flask(__name__)
+
+BaseOptions = python.BaseOptions
+FaceLandmarker = vision.FaceLandmarker
+FaceLandmarkerOptions = vision.FaceLandmarkerOptions
+VisionRunningMode = vision.RunningMode
+
+options = FaceLandmarkerOptions(
+    base_options=BaseOptions(model_asset_path='face_landmarker.task'),
+    running_mode=VisionRunningMode.IMAGE,
+    num_faces=1
+)
+face_landmarker = FaceLandmarker.create_from_options(options)
 
 # --- Настройка MediaPipe ---
 mp_face_mesh = mp.solutions.face_mesh
 mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
-# Добавляем Face Geometry
-mp_face_geometry = mp.solutions.face_geometry
 
 # --- Индексы ключевых точек (обновленные) ---
 LEFT_TEMPLE = 139
