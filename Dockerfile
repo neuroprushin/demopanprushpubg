@@ -8,8 +8,6 @@ WORKDIR /app
 ENV PYTHONUNBUFFERED=1
 ENV PORT=8080
 
-# Копируем файл с зависимостями
-# УБЕДИСЬ, ЧТО ОН СОДЕРЖИТ ТОЛЬКО 5 НУЖНЫХ СТРОК!
 COPY requirements.txt .
 
 # Обновляем pip и устанавливаем зависимости
@@ -20,8 +18,7 @@ RUN pip install --no-cache-dir --upgrade pip && \
 # УБЕДИСЬ, что файл face_landmarker.task лежит рядом
 COPY app.py .
 COPY templates ./templates
-COPY face_landmarker.task . # Копируем базовую модель
-
+COPY face_landmarker.task . 
 # Открываем порт, который будет слушать Gunicorn
 EXPOSE ${PORT}
 
