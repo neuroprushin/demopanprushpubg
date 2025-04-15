@@ -12,6 +12,9 @@
         .result-box img { max-width: 100%; height: auto; display: block; margin-top: 10px; border: 1px solid #eee; border-radius: 5px; }
         .status { margin-top: 15px; font-weight: bold; font-size: 1.2em; padding: 10px; background-color: #e7e7e7; border-radius: 5px; }
         .error { color: red; background-color: #fdd; }
+        /* !!! ДОБАВЛЕНО: Стили для блока с деталями расчета !!! */
+        .debug-info { margin-top: 20px; padding: 15px; border: 1px dashed #ccc; background-color: #f9f9f9; text-align: left; font-family: monospace; white-space: pre-wrap; /* Для переноса строк */ word-wrap: break-word; font-size: 0.9em; }
+        .debug-info h3 { margin-top: 0; font-family: sans-serif; }
         h1 { text-align: center; color: #333; }
         label { font-weight: bold; }
         input[type="file"] { margin-top: 5px; }
@@ -49,6 +52,14 @@
                     <img src="data:image/jpeg;base64,{{ processed_image_data }}" alt="Processed Image">
                 {% endif %}
              </div>
+        {% endif %}
+
+        {# !!! ДОБАВЛЕНО: Блок для вывода деталей расчета !!! #}
+        {% if debug_info %}
+            <div class="debug-info">
+                <h3>Детали расчета:</h3>
+                <pre>{{ debug_info }}</pre> {# Используем <pre> для сохранения форматирования #}
+            </div>
         {% endif %}
 
     </div>
