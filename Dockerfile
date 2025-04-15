@@ -23,4 +23,4 @@ COPY face_landmarker.task .
 EXPOSE ${PORT}
 
 # Команда для запуска приложения через Gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:${PORT}", "app:app"]
+CMD gunicorn --bind 0.0.0.0:${PORT} app:app
