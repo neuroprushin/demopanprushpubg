@@ -1,5 +1,5 @@
-# Используем официальный образ Python
-FROM python:3.9-slim
+# Используем официальный образ Python 3.11 (как в логе Render)
+FROM python:3.11-slim
 
 # Устанавливаем рабочую директорию
 WORKDIR /app
@@ -9,6 +9,7 @@ ENV PYTHONUNBUFFERED=1
 ENV PORT=8080
 
 # Копируем файл с зависимостями
+# УБЕДИСЬ, ЧТО ОН СОДЕРЖИТ ТОЛЬКО 5 НУЖНЫХ СТРОК!
 COPY requirements.txt .
 
 # Обновляем pip и устанавливаем зависимости
@@ -16,11 +17,10 @@ RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
 # Копируем всё остальное приложение
-# УБЕДИСЬ, что файл .task (например, face_landmarker_v2_with_blendshapes.task)
-# лежит рядом с Dockerfile и app.py перед сборкой образа
+# УБЕДИСЬ, что файл face_landmarker.task лежит рядом
 COPY app.py .
 COPY templates ./templates
-COPY face_landmarker_v2_with_blendshapes.task . # <-- КОПИРУЕМ МОДЕЛЬ
+COPY face_landmarker.task . # Копируем базовую модель
 
 # Открываем порт, который будет слушать Gunicorn
 EXPOSE ${PORT}
